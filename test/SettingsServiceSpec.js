@@ -11,9 +11,16 @@ describe('SettingsService', () => {
         let demoKey = 'DEMOKEY';
         let demoValue = 'DEMOVALUE';
 
+        let demoNamespacedKey = 'DEMONAMESPACE:DEMOKEY';
+
         it('should set a setting', () => {
             settingsService.set(demoKey, demoValue);
             expect(settingsService.settings[demoKey]).toBe(demoValue);
+        });
+
+        it('should set a namespaced setting', () => {
+            settingsService.set(demoNamespacedKey, demoValue);
+            expect(settingsService.settings.DEMONAMESPACE.DEMOKEY).toBe(demoValue);
         });
     });
 
@@ -28,6 +35,7 @@ describe('SettingsService', () => {
         it('should get a setting', () => {
             expect(settingsService.get(demoKey)).toBe(demoValue);
         });
+
     });
 
     describe('SettingsService#enabled', () => {
