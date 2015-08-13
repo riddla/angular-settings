@@ -1,11 +1,11 @@
-import { DebugService } from "./debugService/index";
+import { SettingsService } from "./settingsService/index";
 
 import angular from 'angular';
 
 class debugServiceProvider {
 
     constructor() {
-        this.instance = new DebugService();
+        this.instance = new SettingsService();
     }
 
     setDefaults(newDebugData) {
