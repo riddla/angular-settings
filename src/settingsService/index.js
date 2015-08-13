@@ -6,43 +6,48 @@ class SettingsService {
         this.currentSettings = {};
     }
 
-    // see https://www.npmjs.com/package/underscore.deep#deepfromflat-obj
-    deepFromFlat(flatObject) {
-        var key, newKey, deepObject, part, parts, tempObject;
-
-        deepObject = {};
-
-        for (key in flatObject) {
-            tempObject = deepObject;
-            parts = key.split('.');
-            newKey = parts.pop();
-            while (parts.length) {
-                part = parts.shift();
-                tempObject = tempObject[part] = tempObject[part] || {};
-            }
-            tempObject[newKey] = flatObject[key];
+    _set(key, value) {
+        if (!value) {
+            value = {};
         }
 
-        return deepObject;
+        this.currentSettings[key] = value;
     }
 
     set(key, value) {
-
-        let keys = [];
-
         if (key.includes(':')) {
-            keys = key.split(':').join('.');
-            var foo = {};
-            foo[keys] = value;
-            this.currentSettings = this.deepFromFlat(foo);
+            let keys = key.split(':');
+            let namespace = keys[0];
+            let tempKey = keys[1];
+
+            this._set(namespace);
+            this.currentSettings[namespace][tempKey] = value;
+
         }
         else {
-            this.currentSettings[key] = value;
+            this._set(key, value);
         }
     }
 
-    get(key) {
+    _get(key) {
         return this.currentSettings[key];
+    }
+
+    get(key) {
+        if (key.includes(':')) {
+            let keys = key.split(':');
+            let namespace = keys[0];
+            let tempKey = keys[1];
+
+            if (!this.currentSettings[namespace]) {
+                return undefined;
+            }
+
+            return this.currentSettings[namespace][tempKey];
+        }
+        else {
+            return this._get(key);
+        }
     }
 
     enabled(key) {

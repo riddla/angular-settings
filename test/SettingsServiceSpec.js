@@ -2,6 +2,7 @@ import { SettingsService } from "src/settingsService/index";
 
 describe('SettingsService', () => {
     let settingsService;
+    let demoNamespacedKey = 'DEMONAMESPACE:DEMOKEY';
 
     beforeEach(()=> {
         settingsService = new SettingsService();
@@ -10,8 +11,6 @@ describe('SettingsService', () => {
     describe('SettingsService#set', () => {
         let demoKey = 'DEMOKEY';
         let demoValue = 'DEMOVALUE';
-
-        let demoNamespacedKey = 'DEMONAMESPACE:DEMOKEY';
 
         it('should set a setting', () => {
             settingsService.set(demoKey, demoValue);
@@ -30,12 +29,26 @@ describe('SettingsService', () => {
 
         beforeEach(()=> {
             settingsService.settings[demoKey] = demoValue;
+            settingsService.settings.DEMONAMESPACE = {
+                DEMOKEY: demoValue
+            };
         });
 
         it('should get a setting', () => {
             expect(settingsService.get(demoKey)).toBe(demoValue);
         });
 
+        it('should get a namespaced setting', () => {
+            expect(settingsService.get(demoNamespacedKey)).toBe(demoValue);
+        });
+
+        it('should detect a non-existing namespace', () => {
+            expect(settingsService.get('FOO:BAR')).toBe(undefined);
+        });
+
+        it('should detect a non-existing namespaced key', () => {
+            expect(settingsService.get('DEMONAMESPACE:BAR')).toBe(undefined);
+        });
     });
 
     describe('SettingsService#enabled', () => {
