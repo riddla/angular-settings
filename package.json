@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "build": "jspm bundle-sfx src/index dist/angular-settings.js --format amd"
+  },
   "jspm": {
     "directories": {},
     "dependencies": {

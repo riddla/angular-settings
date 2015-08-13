@@ -6,6 +6,10 @@ class SettingsService {
         this.currentSettings = {};
     }
 
+    setDefaults(defaultSettings) {
+        this.currentSettings = defaultSettings;
+    }
+
     _set(key, value) {
         if (!value) {
             value = {};
@@ -58,11 +62,11 @@ class SettingsService {
         return !this.enabled(key);
     }
 
-    get settings() {
+    get current() {
         return this.currentSettings;
     }
 
-    set settings(settingDefaults) {
+    set current(settingDefaults) {
         this.currentSettings = settingDefaults;
     }
 }

@@ -2,7 +2,7 @@ import { SettingsService } from "./settingsService/index";
 
 import angular from 'angular';
 
-class debugServiceProvider {
+class settingsProvider {
 
     constructor() {
         this.instance = new SettingsService();
@@ -18,25 +18,25 @@ class debugServiceProvider {
 }
 
 angular.module('angular-settings', [])
-    .provider('debugService', debugServiceProvider);
+    .provider('settings', settingsProvider);
 
-export { debugServiceProvider }
+export { settingsProvider }
 
-
-angular.module('Application', ['angular-settings'])
-    .config((debugServiceProvider) => {
-
-        debugServiceProvider.setDefaults({
-            API_KEY: 'eakwekajkejawkjekawj'
-        });
-
-    })
-    .run((debugService) => {
-        console.log(debugService.get('API_KEY'));
-        debugService.set('API_KEY', 'newKey');
-        console.log(debugService.get('API_KEY'));
-    });
-
-angular.element(document).ready(function () {
-    angular.bootstrap(document, ['Application']);
-});
+//
+//angular.module('Application', ['angular-settings'])
+//    .config((settingsProvider) => {
+//
+//        settingsProvider.setDefaults({
+//            API_KEY: 'eakwekajkejawkjekawj'
+//        });
+//
+//    })
+//    .run((debugService) => {
+//        console.log(debugService.get('API_KEY'));
+//        debugService.set('API_KEY', 'newKey');
+//        console.log(debugService.get('API_KEY'));
+//    });
+//
+//angular.element(document).ready(function () {
+//    angular.bootstrap(document, ['Application']);
+//});

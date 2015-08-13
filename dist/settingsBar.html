@@ -1,0 +1,41 @@
+<form class="form-inline">
+    <div class="form-group" ng-repeat="(key, value) in vm.settings">
+        <label for="exampleInputName2" ng-bind="key"></label>
+        <input type="text" class="form-control" id="exampleInputName2" disabled ng-value="value">
+    </div>
+</form>
+
+<nav id="settings" class="navbar navbar-default navbar-fixed-bottom navbar-inverse" ng-cloak ng-class="{ 'closed': vm.closed}">
+	<div class="container-fluid">
+		<form class="navbar-form navbar-left" role="search" ng-if="vm.open">
+			<div class="form-group" ng-repeat="(key, value) in vm.settingsService.settings">
+				<span ng-if="vm._.isBoolean(value)">
+					<span class="glyphicon" ng-class="{'glyphicon-check': vm.settingsService.settings[key], 'glyphicon-unchecked': ! vm.settingsService.settings[key] }"></span>
+					<!--<input type="checkbox" class="form-control" ng-model="vm.settingsService.settings[key]" />-->
+					<span ng-bind="key" ng-click="vm.toggle(key)"></span>
+				</span>
+			</div>
+		</form>
+		<ul class="nav navbar-nav" ng-if="vm.open">
+			<li>
+				<form class="navbar-form navbar-left" role="search" ng-repeat="(key, value) in vm.actions">
+					<button type="submit" class="btn btn-primary btn-xs" ng-click="vm.callAction(key)" ng-bind="key + '()'"></button>
+				</form>
+			</li>
+		</ul>
+
+		<ul class="nav navbar-nav navbar-right">
+			<li><a ng-click="vm.showDialog()" class="navbar-link"><span class="glyphicon" ng-class="{'glyphicon-check': debugMode, 'glyphicon-unchecked': ! debugMode }"></span> Debug mode</a></li>
+		</ul>
+		<ul class="nav navbar-nav navbar-right" ng-if="vm.open">
+			<li>
+				<p class="navbar-text" ng-repeat="(key, value) in vm.settings"><span ng-bind="key"></span>: <span ng-bind="value" ng-cloak class="badge"></span></p>
+				<p class="navbar-text" ng-repeat="(key, value) in vm.settingsService.settings" ng-if="! vm._.isBoolean(value)">
+				<span ng-if="! vm._.isBoolean(value)">
+					<span ng-bind="key"></span>: <span ng-bind="value" class="badge"></span>
+				</span>
+				</p>
+			</li>
+		</ul>
+	</div>
+</nav>

@@ -14,12 +14,12 @@ describe('SettingsService', () => {
 
         it('should set a setting', () => {
             settingsService.set(demoKey, demoValue);
-            expect(settingsService.settings[demoKey]).toBe(demoValue);
+            expect(settingsService.current[demoKey]).toBe(demoValue);
         });
 
         it('should set a namespaced setting', () => {
             settingsService.set(demoNamespacedKey, demoValue);
-            expect(settingsService.settings.DEMONAMESPACE.DEMOKEY).toBe(demoValue);
+            expect(settingsService.current.DEMONAMESPACE.DEMOKEY).toBe(demoValue);
         });
     });
 
@@ -28,8 +28,8 @@ describe('SettingsService', () => {
         let demoValue = 'DEMOVALUE';
 
         beforeEach(()=> {
-            settingsService.settings[demoKey] = demoValue;
-            settingsService.settings.DEMONAMESPACE = {
+            settingsService.current[demoKey] = demoValue;
+            settingsService.current.DEMONAMESPACE = {
                 DEMOKEY: demoValue
             };
         });
@@ -58,8 +58,8 @@ describe('SettingsService', () => {
         let demoValue2 = false;
 
         beforeEach(()=> {
-            settingsService.settings[demoKey] = demoValue;
-            settingsService.settings[demoKey2] = demoValue2;
+            settingsService.current[demoKey] = demoValue;
+            settingsService.current[demoKey2] = demoValue2;
         });
 
         it('should check if a boolean setting is set', () => {
@@ -75,8 +75,8 @@ describe('SettingsService', () => {
         let demoValue2 = false;
 
         beforeEach(()=> {
-            settingsService.settings[demoKey] = demoValue;
-            settingsService.settings[demoKey2] = demoValue2;
+            settingsService.current[demoKey] = demoValue;
+            settingsService.current[demoKey2] = demoValue2;
         });
 
         it('should check if a boolean setting is not set', () => {
