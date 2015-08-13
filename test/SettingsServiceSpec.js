@@ -8,7 +8,7 @@ describe('SettingsService', () => {
         settingsService = new SettingsService();
     });
 
-    describe('SettingsService#set', () => {
+    describe('#set', () => {
         let demoKey = 'DEMOKEY';
         let demoValue = 'DEMOVALUE';
 
@@ -23,7 +23,7 @@ describe('SettingsService', () => {
         });
     });
 
-    describe('SettingsService#get', () => {
+    describe('#get', () => {
         let demoKey = 'DEMOKEY';
         let demoValue = 'DEMOVALUE';
 
@@ -51,7 +51,7 @@ describe('SettingsService', () => {
         });
     });
 
-    describe('SettingsService#enabled', () => {
+    describe('#enabled', () => {
         let demoKey = 'DEMOKEY';
         let demoValue = true;
         let demoKey2 = 'DEMOKEY2';
@@ -68,7 +68,7 @@ describe('SettingsService', () => {
         });
     });
 
-    describe('SettingsService#disabled', () => {
+    describe('#disabled', () => {
         let demoKey = 'DEMOKEY';
         let demoValue = true;
         let demoKey2 = 'DEMOKEY2';
