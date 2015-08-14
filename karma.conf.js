@@ -13,7 +13,9 @@ module.exports = function (config) {
                 'test/**/*.js'
             ],
             serveFiles: [
-                'src/**/*.js'
+                'src/**/*.js',
+                'node_modules/angular/*',
+                'node_modules/angular-mocks/*'
             ]
         },
 

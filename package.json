@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "build": "jspm bundle-sfx src/index dist/angular-settings.js --format amd"
+    "build": "jspm bundle-sfx src/index dist/angular-settings.js --format amd",
+    "watch": "watch 'npm run build' src/"
   },
   "jspm": {
     "directories": {},
@@ -14,6 +15,8 @@
     }
   },
   "devDependencies": {
+    "angular": "^1.4.4",
+    "angular-mocks": "^1.4.4",
     "jasmine": "^2.3.2",
     "jasmine-core": "^2.3.4",
     "karma": "^0.13.9",
@@ -22,6 +25,7 @@
     "karma-jasmine": "^0.3.6",
     "karma-jspm": "git://github.com/JeroenVinke/karma-jspm#master",
     "karma-phantomjs-launcher": "^0.2.1",
-    "phantomjs": "^1.9.18"
+    "phantomjs": "^1.9.18",
+    "watch": "^0.16.0"
   }
 }

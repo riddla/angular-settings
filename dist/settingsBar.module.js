@@ -1,13 +1,15 @@
 /* global define */
-(function (define) {
+(function () {
 	'use strict';
 
-	define(function (require) {
+    angular
+        .module('angular-settings', [])
+        .config(function(settingsProvider) {
+            settingsProvider.set('settingsbar:actions', {
+                foo: function() {
+                    alert('bar');
+                }
+            });
+        });
 
-		var angular = require('angular');
-		require('ngDialog');
-
-		return angular.module('debugBar', ['ngDialog']);
-	});
-
-}(define));
+}());
