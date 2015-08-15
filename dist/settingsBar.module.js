@@ -3,13 +3,14 @@
 	'use strict';
 
     angular
-        .module('angular-settings', [])
+        .module('angular-settings')
         .config(function(settingsProvider) {
-            settingsProvider.set('settingsbar:actions', {
+            settingsProvider.setDefaults('settingsbar:actions', {
                 foo: function() {
                     alert('bar');
                 }
             });
+            debugger;
         });
 
 }());

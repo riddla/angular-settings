@@ -545,16 +545,6 @@
 
 })(typeof self != 'undefined' ? self : global);
 
-System.registerDynamic("2", ["5"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = require("5");
-  global.define = __define;
-  return module.exports;
-});
-
 System.registerDynamic("3", ["6"], true, function(require, exports, module) {
   ;
   var global = this,
@@ -602,7 +592,43 @@ System.registerDynamic("4", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("5", [], false, function(__require, __exports, __module) {
+System.registerDynamic("2", ["7"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = require("7");
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("6", ["8"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = {
+    "default": require("8"),
+    __esModule: true
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("5", ["9"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = {
+    "default": require("9"),
+    __esModule: true
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("7", [], false, function(__require, __exports, __module) {
   var _retrieveGlobal = System.get("@@global-helpers").prepareGlobal(__module.id, "angular", null);
   (function() {
     "format global";
@@ -11807,25 +11833,12 @@ System.registerDynamic("5", [], false, function(__require, __exports, __module) 
   return _retrieveGlobal();
 });
 
-System.registerDynamic("6", ["7"], true, function(require, exports, module) {
+System.registerDynamic("8", ["a"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = {
-    "default": require("7"),
-    __esModule: true
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("7", ["8"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var $ = require("8");
+  var $ = require("a");
   module.exports = function defineProperty(it, key, desc) {
     return $.setDesc(it, key, desc);
   };
@@ -11833,7 +11846,18 @@ System.registerDynamic("7", ["8"], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("8", ["9"], true, function(require, exports, module) {
+System.registerDynamic("9", ["b", "a"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  require("b");
+  module.exports = require("a").core.Object.assign;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("a", ["c"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -11886,7 +11910,7 @@ System.registerDynamic("8", ["9"], true, function(require, exports, module) {
       throw TypeError("Can't call method on  " + it);
     return it;
   }
-  var $ = module.exports = require("9")({
+  var $ = module.exports = require("c")({
     g: global,
     core: core,
     html: global.document && document.documentElement,
@@ -11934,7 +11958,44 @@ System.registerDynamic("8", ["9"], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("9", [], true, function(require, exports, module) {
+System.registerDynamic("b", ["d", "e"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $def = require("d");
+  $def($def.S, 'Object', {assign: require("e")});
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("e", ["a", "f"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $ = require("a"),
+      enumKeys = require("f");
+  module.exports = Object.assign || function assign(target, source) {
+    var T = Object($.assertDefined(target)),
+        l = arguments.length,
+        i = 1;
+    while (l > i) {
+      var S = $.ES5Object(arguments[i++]),
+          keys = enumKeys(S),
+          length = keys.length,
+          j = 0,
+          key;
+      while (length > j)
+        T[key = keys[j++]] = S[key];
+    }
+    return T;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("c", [], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -11943,6 +12004,86 @@ System.registerDynamic("9", [], true, function(require, exports, module) {
     $.FW = false;
     $.path = $.core;
     return $;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("d", ["a"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $ = require("a"),
+      global = $.g,
+      core = $.core,
+      isFunction = $.isFunction;
+  function ctx(fn, that) {
+    return function() {
+      return fn.apply(that, arguments);
+    };
+  }
+  $def.F = 1;
+  $def.G = 2;
+  $def.S = 4;
+  $def.P = 8;
+  $def.B = 16;
+  $def.W = 32;
+  function $def(type, name, source) {
+    var key,
+        own,
+        out,
+        exp,
+        isGlobal = type & $def.G,
+        isProto = type & $def.P,
+        target = isGlobal ? global : type & $def.S ? global[name] : (global[name] || {}).prototype,
+        exports = isGlobal ? core : core[name] || (core[name] = {});
+    if (isGlobal)
+      source = name;
+    for (key in source) {
+      own = !(type & $def.F) && target && key in target;
+      if (own && key in exports)
+        continue;
+      out = own ? target[key] : source[key];
+      if (isGlobal && !isFunction(target[key]))
+        exp = source[key];
+      else if (type & $def.B && own)
+        exp = ctx(out, global);
+      else if (type & $def.W && target[key] == out)
+        !function(C) {
+          exp = function(param) {
+            return this instanceof C ? new C(param) : C(param);
+          };
+          exp.prototype = C.prototype;
+        }(out);
+      else
+        exp = isProto && isFunction(out) ? ctx(Function.call, out) : out;
+      exports[key] = exp;
+      if (isProto)
+        (exports.prototype || (exports.prototype = {}))[key] = out;
+    }
+  }
+  module.exports = $def;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("f", ["a"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $ = require("a");
+  module.exports = function(it) {
+    var keys = $.getKeys(it),
+        getDesc = $.getDesc,
+        getSymbols = $.getSymbols;
+    if (getSymbols)
+      $.each.call(getSymbols(it), function(key) {
+        if (getDesc(it, key).enumerable)
+          keys.push(key);
+      });
+    return keys;
   };
   global.define = __define;
   return module.exports;
@@ -12011,14 +12152,16 @@ System.register('0', ['1', '2', '3', '4'], function (_export) {
         }
     };
 });
-System.register('1', ['3', '4'], function (_export) {
-    var _createClass, _classCallCheck, SettingsService;
+System.register('1', ['3', '4', '5'], function (_export) {
+    var _createClass, _classCallCheck, _Object$assign, SettingsService;
 
     return {
         setters: [function (_) {
             _createClass = _['default'];
         }, function (_2) {
             _classCallCheck = _2['default'];
+        }, function (_3) {
+            _Object$assign = _3['default'];
         }],
         execute: function () {
             'use strict';
@@ -12031,9 +12174,14 @@ System.register('1', ['3', '4'], function (_export) {
                 }
 
                 _createClass(SettingsService, [{
+                    key: 'clear',
+                    value: function clear() {
+                        this.currentSettings = {};
+                    }
+                }, {
                     key: 'setDefaults',
                     value: function setDefaults(defaultSettings) {
-                        this.currentSettings = defaultSettings;
+                        this.currentSettings = _Object$assign(this.currentSettings, defaultSettings);
                     }
                 }, {
                     key: '_set',

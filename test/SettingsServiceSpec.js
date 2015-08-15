@@ -2,10 +2,42 @@ import { SettingsService } from "src/settingsService/index";
 
 describe('SettingsService', () => {
     let settingsService;
-    let demoNamespacedKey = 'DEMONAMESPACE:DEMOKEY';
+    let demoNamespaceKey = 'DEMONAMESPACE:DEMOKEY';
+    let demoKey = 'DEMOKEY';
+    let demoValue = 'DEMOVALUE';
 
     beforeEach(()=> {
         settingsService = new SettingsService();
+    });
+
+    describe('#clear', () => {
+        it('should prune settings', () => {
+            settingsService.current[demoKey] = demoValue;
+
+            settingsService.clear();
+            expect(settingsService.current).toEqual({});
+        });
+    });
+
+    describe('#setDefaults', () => {
+        let defaults = {};
+        defaults[demoKey] = demoValue;
+
+        it('should set default settings', () => {
+            settingsService.setDefaults(defaults);
+            expect(settingsService.current).toEqual(defaults);
+        });
+
+        it('should merge defaults settings if invoked multiple times', () => {
+            settingsService.setDefaults(defaults);
+            settingsService.setDefaults({
+                foo: 'bar'
+            });
+            expect(settingsService.current).toEqual({
+                DEMOKEY: 'DEMOVALUE',
+                foo: 'bar'
+            });
+        });
     });
 
     describe('#set', () => {
@@ -18,7 +50,7 @@ describe('SettingsService', () => {
         });
 
         it('should set a namespaced setting', () => {
-            settingsService.set(demoNamespacedKey, demoValue);
+            settingsService.set(demoNamespaceKey, demoValue);
             expect(settingsService.current.DEMONAMESPACE.DEMOKEY).toBe(demoValue);
         });
     });
@@ -39,7 +71,7 @@ describe('SettingsService', () => {
         });
 
         it('should get a namespaced setting', () => {
-            expect(settingsService.get(demoNamespacedKey)).toBe(demoValue);
+            expect(settingsService.get(demoNamespaceKey)).toBe(demoValue);
         });
 
         it('should detect a non-existing namespace', () => {

@@ -15,7 +15,8 @@ module.exports = function (config) {
             serveFiles: [
                 'src/**/*.js',
                 'node_modules/angular/*',
-                'node_modules/angular-mocks/*'
+                'node_modules/angular-mocks/*',
+                'node_modules/lodash-es/**/*'
             ]
         },
 

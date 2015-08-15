@@ -6,8 +6,12 @@ class SettingsService {
         this.currentSettings = {};
     }
 
+    clear() {
+        this.currentSettings = {};
+    }
+
     setDefaults(defaultSettings) {
-        this.currentSettings = defaultSettings;
+        this.currentSettings = Object.assign(this.currentSettings, defaultSettings);
     }
 
     _set(key, value) {
@@ -26,7 +30,6 @@ class SettingsService {
 
             this._set(namespace);
             this.currentSettings[namespace][tempKey] = value;
-
         }
         else {
             this._set(key, value);

@@ -31,22 +31,7 @@
                 });
             };
 
-            vm.actions = {
-                previewEventMode: function () {
-                },
-                previewErrorMode: function () {
-                    $state.go('error', {errorId: 666});
-                },
-                restartApp: function () {
-                    $window.location = '/';
-                },
-                logAllRoutes: function () {
-                    //console.table($state.get());
-                },
-                showRoomIds: function () {
-                    $rootScope.$broadcast('showRoomIds');
-                }
-            };
+            vm.actions = settings.get('settingsbar:actions');
 
             vm.callAction = function (key) {
                 return vm.actions[key].apply();
