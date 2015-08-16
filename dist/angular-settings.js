@@ -576,6 +576,16 @@ System.registerDynamic("3", ["6"], true, function(require, exports, module) {
   return module.exports;
 });
 
+System.registerDynamic("2", ["7"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = require("7");
+  global.define = __define;
+  return module.exports;
+});
+
 System.registerDynamic("4", [], true, function(require, exports, module) {
   ;
   var global = this,
@@ -588,16 +598,6 @@ System.registerDynamic("4", [], true, function(require, exports, module) {
     }
   };
   exports.__esModule = true;
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("2", ["7"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = require("7");
   global.define = __define;
   return module.exports;
 });
@@ -11833,12 +11833,23 @@ System.registerDynamic("7", [], false, function(__require, __exports, __module) 
   return _retrieveGlobal();
 });
 
-System.registerDynamic("8", ["a"], true, function(require, exports, module) {
+System.registerDynamic("9", ["a", "b"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = require("a");
+  require("a");
+  module.exports = require("b").core.Object.assign;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("8", ["b"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $ = require("b");
   module.exports = function defineProperty(it, key, desc) {
     return $.setDesc(it, key, desc);
   };
@@ -11846,18 +11857,18 @@ System.registerDynamic("8", ["a"], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("9", ["b", "a"], true, function(require, exports, module) {
+System.registerDynamic("a", ["c", "d"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  require("b");
-  module.exports = require("a").core.Object.assign;
+  var $def = require("c");
+  $def($def.S, 'Object', {assign: require("d")});
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("a", ["c"], true, function(require, exports, module) {
+System.registerDynamic("b", ["e"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -11910,7 +11921,7 @@ System.registerDynamic("a", ["c"], true, function(require, exports, module) {
       throw TypeError("Can't call method on  " + it);
     return it;
   }
-  var $ = module.exports = require("c")({
+  var $ = module.exports = require("e")({
     g: global,
     core: core,
     html: global.document && document.documentElement,
@@ -11958,63 +11969,12 @@ System.registerDynamic("a", ["c"], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("b", ["d", "e"], true, function(require, exports, module) {
+System.registerDynamic("c", ["b"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $def = require("d");
-  $def($def.S, 'Object', {assign: require("e")});
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("e", ["a", "f"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var $ = require("a"),
-      enumKeys = require("f");
-  module.exports = Object.assign || function assign(target, source) {
-    var T = Object($.assertDefined(target)),
-        l = arguments.length,
-        i = 1;
-    while (l > i) {
-      var S = $.ES5Object(arguments[i++]),
-          keys = enumKeys(S),
-          length = keys.length,
-          j = 0,
-          key;
-      while (length > j)
-        T[key = keys[j++]] = S[key];
-    }
-    return T;
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("c", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = function($) {
-    $.FW = false;
-    $.path = $.core;
-    return $;
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("d", ["a"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var $ = require("a"),
+  var $ = require("b"),
       global = $.g,
       core = $.core,
       isFunction = $.isFunction;
@@ -12068,12 +12028,52 @@ System.registerDynamic("d", ["a"], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("f", ["a"], true, function(require, exports, module) {
+System.registerDynamic("e", [], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = require("a");
+  module.exports = function($) {
+    $.FW = false;
+    $.path = $.core;
+    return $;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("d", ["b", "f"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $ = require("b"),
+      enumKeys = require("f");
+  module.exports = Object.assign || function assign(target, source) {
+    var T = Object($.assertDefined(target)),
+        l = arguments.length,
+        i = 1;
+    while (l > i) {
+      var S = $.ES5Object(arguments[i++]),
+          keys = enumKeys(S),
+          length = keys.length,
+          j = 0,
+          key;
+      while (length > j)
+        T[key = keys[j++]] = S[key];
+    }
+    return T;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("f", ["b"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $ = require("b");
   module.exports = function(it) {
     var keys = $.getKeys(it),
         getDesc = $.getDesc,
@@ -12090,172 +12090,170 @@ System.registerDynamic("f", ["a"], true, function(require, exports, module) {
 });
 
 System.register('0', ['1', '2', '3', '4'], function (_export) {
-    var SettingsService, angular, _createClass, _classCallCheck, settingsProvider;
+	var SettingsService, angular, _createClass, _classCallCheck, settingsProvider;
 
-    return {
-        setters: [function (_3) {
-            SettingsService = _3.SettingsService;
-        }, function (_4) {
-            angular = _4['default'];
-        }, function (_) {
-            _createClass = _['default'];
-        }, function (_2) {
-            _classCallCheck = _2['default'];
-        }],
-        execute: function () {
-            'use strict';
+	return {
+		setters: [function (_3) {
+			SettingsService = _3.SettingsService;
+		}, function (_4) {
+			angular = _4['default'];
+		}, function (_) {
+			_createClass = _['default'];
+		}, function (_2) {
+			_classCallCheck = _2['default'];
+		}],
+		execute: function () {
+			'use strict';
 
-            settingsProvider = (function () {
-                function settingsProvider() {
-                    _classCallCheck(this, settingsProvider);
+			settingsProvider = (function () {
+				function settingsProvider() {
+					_classCallCheck(this, settingsProvider);
 
-                    this.instance = new SettingsService();
-                }
+					this.instance = new SettingsService();
+				}
 
-                _createClass(settingsProvider, [{
-                    key: 'setDefaults',
-                    value: function setDefaults(newDebugData) {
-                        this.instance.setDefaults(newDebugData);
-                    }
-                }, {
-                    key: '$get',
-                    value: function $get() {
-                        return this.instance;
-                    }
-                }]);
+				_createClass(settingsProvider, [{
+					key: 'setDefaults',
+					value: function setDefaults(newDebugData) {
+						this.instance.setDefaults(newDebugData);
+					}
+				}, {
+					key: '$get',
+					value: function $get() {
+						return this.instance;
+					}
+				}]);
 
-                return settingsProvider;
-            })();
+				return settingsProvider;
+			})();
 
-            angular.module('angular-settings', []).provider('settings', settingsProvider);
+			angular.module('angular-settings', []).provider('settings', settingsProvider);
 
-            _export('settingsProvider', settingsProvider);
+			_export('settingsProvider', settingsProvider);
 
-            //
-            //angular.module('Application', ['angular-settings'])
-            //    .config((settingsProvider) => {
-            //
-            //        settingsProvider.setDefaults({
-            //            API_KEY: 'eakwekajkejawkjekawj'
-            //        });
-            //
-            //    })
-            //    .run((debugService) => {
-            //        console.log(debugService.get('API_KEY'));
-            //        debugService.set('API_KEY', 'newKey');
-            //        console.log(debugService.get('API_KEY'));
-            //    });
-            //
-            //angular.element(document).ready(function () {
-            //    angular.bootstrap(document, ['Application']);
-            //});
-        }
-    };
+			//
+			//angular.module('Application', ['angular-settings'])
+			//    .config((settingsProvider) => {
+			//
+			//        settingsProvider.setDefaults({
+			//            API_KEY: 'eakwekajkejawkjekawj'
+			//        });
+			//
+			//    })
+			//    .run((debugService) => {
+			//        console.log(debugService.get('API_KEY'));
+			//        debugService.set('API_KEY', 'newKey');
+			//        console.log(debugService.get('API_KEY'));
+			//    });
+			//
+			//angular.element(document).ready(function () {
+			//    angular.bootstrap(document, ['Application']);
+			//});
+		}
+	};
 });
 System.register('1', ['3', '4', '5'], function (_export) {
-    var _createClass, _classCallCheck, _Object$assign, SettingsService;
+	var _createClass, _classCallCheck, _Object$assign, SettingsService;
 
-    return {
-        setters: [function (_) {
-            _createClass = _['default'];
-        }, function (_2) {
-            _classCallCheck = _2['default'];
-        }, function (_3) {
-            _Object$assign = _3['default'];
-        }],
-        execute: function () {
-            'use strict';
+	return {
+		setters: [function (_) {
+			_createClass = _['default'];
+		}, function (_2) {
+			_classCallCheck = _2['default'];
+		}, function (_3) {
+			_Object$assign = _3['default'];
+		}],
+		execute: function () {
+			'use strict';
 
-            SettingsService = (function () {
-                function SettingsService() {
-                    _classCallCheck(this, SettingsService);
+			SettingsService = (function () {
+				function SettingsService() {
+					_classCallCheck(this, SettingsService);
 
-                    this.currentSettings = {};
-                }
+					this.currentSettings = {};
+				}
 
-                _createClass(SettingsService, [{
-                    key: 'clear',
-                    value: function clear() {
-                        this.currentSettings = {};
-                    }
-                }, {
-                    key: 'setDefaults',
-                    value: function setDefaults(defaultSettings) {
-                        this.currentSettings = _Object$assign(this.currentSettings, defaultSettings);
-                    }
-                }, {
-                    key: '_set',
-                    value: function _set(key, value) {
-                        if (!value) {
-                            value = {};
-                        }
+				_createClass(SettingsService, [{
+					key: 'clear',
+					value: function clear() {
+						this.currentSettings = {};
+					}
+				}, {
+					key: 'setDefaults',
+					value: function setDefaults(defaultSettings) {
+						this.currentSettings = _Object$assign(this.currentSettings, defaultSettings);
+					}
+				}, {
+					key: '_set',
+					value: function _set(key, value) {
+						if (!value) {
+							value = {};
+						}
 
-                        this.currentSettings[key] = value;
-                    }
-                }, {
-                    key: 'set',
-                    value: function set(key, value) {
-                        if (key.includes(':')) {
-                            var keys = key.split(':');
-                            var namespace = keys[0];
-                            var tempKey = keys[1];
+						this.currentSettings[key] = value;
+					}
+				}, {
+					key: 'set',
+					value: function set(key, value) {
+						if (key.includes(':')) {
+							var keys = key.split(':');
+							var namespace = keys[0];
+							var tempKey = keys[1];
 
-                            this._set(namespace);
-                            this.currentSettings[namespace][tempKey] = value;
-                        } else {
-                            this._set(key, value);
-                        }
-                    }
-                }, {
-                    key: '_get',
-                    value: function _get(key) {
-                        return this.currentSettings[key];
-                    }
-                }, {
-                    key: 'get',
-                    value: function get(key) {
-                        if (key.includes(':')) {
-                            var keys = key.split(':');
-                            var namespace = keys[0];
-                            var tempKey = keys[1];
+							this._set(namespace);
+							this.currentSettings[namespace][tempKey] = value;
+						} else {
+							this._set(key, value);
+						}
+					}
+				}, {
+					key: '_get',
+					value: function _get(key) {
+						return this.currentSettings[key];
+					}
+				}, {
+					key: 'get',
+					value: function get(key) {
+						if (key.includes(':')) {
+							var keys = key.split(':');
+							var namespace = keys[0];
+							var tempKey = keys[1];
 
-                            if (!this.currentSettings[namespace]) {
-                                return undefined;
-                            }
+							if (!this.currentSettings[namespace]) {
+								return undefined;
+							}
 
-                            return this.currentSettings[namespace][tempKey];
-                        } else {
-                            return this._get(key);
-                        }
-                    }
-                }, {
-                    key: 'enabled',
-                    value: function enabled(key) {
-                        return this.currentSettings[key] === true;
-                    }
-                }, {
-                    key: 'disabled',
-                    value: function disabled(key) {
-                        return !this.enabled(key);
-                    }
-                }, {
-                    key: 'current',
-                    get: function get() {
-                        return this.currentSettings;
-                    },
-                    set: function set(settingDefaults) {
-                        this.currentSettings = settingDefaults;
-                    }
-                }]);
+							return this.currentSettings[namespace][tempKey];
+						} else {
+							return this._get(key);
+						}
+					}
+				}, {
+					key: 'enabled',
+					value: function enabled(key) {
+						return this.currentSettings[key] === true;
+					}
+				}, {
+					key: 'disabled',
+					value: function disabled(key) {
+						return !this.enabled(key);
+					}
+				}, {
+					key: 'current',
+					get: function get() {
+						return this.currentSettings;
+					},
+					set: function set(settingDefaults) {
+						this.currentSettings = settingDefaults;
+					}
+				}]);
 
-                return SettingsService;
-            })();
+				return SettingsService;
+			})();
 
-            ;
-
-            _export('SettingsService', SettingsService);
-        }
-    };
+			_export('SettingsService', SettingsService);
+		}
+	};
 });
 })
 (function(factory) {

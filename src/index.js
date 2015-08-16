@@ -1,26 +1,26 @@
-import { SettingsService } from "./settingsService/index";
+import { SettingsService } from './settingsService/index';
 
 import angular from 'angular';
 
 class settingsProvider {
 
-    constructor() {
-        this.instance = new SettingsService();
-    }
+	constructor() {
+		this.instance = new SettingsService();
+	}
 
-    setDefaults(newDebugData) {
-        this.instance.setDefaults(newDebugData);
-    }
+	setDefaults(newDebugData) {
+		this.instance.setDefaults(newDebugData);
+	}
 
-    $get() {
-        return this.instance;
-    }
+	$get() {
+		return this.instance;
+	}
 }
 
 angular.module('angular-settings', [])
-    .provider('settings', settingsProvider);
+	.provider('settings', settingsProvider);
 
-export { settingsProvider }
+export { settingsProvider };
 
 //
 //angular.module('Application', ['angular-settings'])

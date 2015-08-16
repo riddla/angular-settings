@@ -17,6 +17,7 @@
   "devDependencies": {
     "angular": "^1.4.4",
     "angular-mocks": "^1.4.4",
+    "eslint": "^1.1.0",
     "jasmine": "^2.3.2",
     "jasmine-core": "^2.3.4",
     "karma": "^0.13.9",
