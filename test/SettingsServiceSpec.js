@@ -6,8 +6,23 @@ describe('SettingsService', () => {
     let demoKey = 'DEMOKEY';
     let demoValue = 'DEMOVALUE';
 
-    beforeEach(()=> {
-        settingsService = new SettingsService();
+	let demoSavedSettings = {
+		DEMO_SAVED_KEY: 'DEMO_SAVED_VALUE'
+	};
+
+	let mockStorage = {
+		setItem: function() {},
+		removeItem: function() {},
+		key: function() {},
+		getItem: function() {},
+		removeItem: function() {},
+		length: 0
+	};
+
+
+	beforeEach(()=> {
+		spyOn(mockStorage, 'getItem').and.returnValue(demoSavedSettings);
+        settingsService = new SettingsService(mockStorage);
     });
 
     describe('#clear', () => {
@@ -54,6 +69,22 @@ describe('SettingsService', () => {
             expect(settingsService.current.DEMONAMESPACE.DEMOKEY).toBe(demoValue);
         });
     });
+
+	fdescribe('localstorage', () => {
+		beforeEach(() => {
+			spyOn(mockStorage, 'setItem');
+		});
+
+		it('should save the current settings to localstorage', () => {
+			settingsService.set(demoKey, demoValue);
+			expect(mockStorage.setItem).toHaveBeenCalled();
+		});
+
+		it('should get saved settings upon start', () => {
+			expect(mockStorage.getItem).toHaveBeenCalled();
+            expect(settingsService.current).toEqual(demoSavedSettings);
+		});
+	});
 
     describe('#get', () => {
         let demoKey = 'DEMOKEY';

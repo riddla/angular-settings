@@ -2,8 +2,11 @@
 
 class SettingsService {
 
-	constructor() {
+	constructor(storage) {
 		this.currentSettings = {};
+		this.storage = storage || window.localStorage;
+
+		this.currentSettings = Object.assign(this.currentSettings, this.storage.getItem('AngularSettingService'));
 	}
 
 	clear() {
@@ -20,6 +23,8 @@ class SettingsService {
 		}
 
 		this.currentSettings[key] = value;
+
+		this.storage.setItem('AngularSettingService', this.currentSettings);
 	}
 
 	set(key, value) {

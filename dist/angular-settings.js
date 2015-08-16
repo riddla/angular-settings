@@ -545,13 +545,23 @@
 
 })(typeof self != 'undefined' ? self : global);
 
-System.registerDynamic("3", ["6"], true, function(require, exports, module) {
+System.registerDynamic("2", ["6"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = require("6");
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("3", ["7"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   "use strict";
-  var _Object$defineProperty = require("6")["default"];
+  var _Object$defineProperty = require("7")["default"];
   exports["default"] = (function() {
     function defineProperties(target, props) {
       for (var i = 0; i < props.length; i++) {
@@ -576,16 +586,6 @@ System.registerDynamic("3", ["6"], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("2", ["7"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = require("7");
-  global.define = __define;
-  return module.exports;
-});
-
 System.registerDynamic("4", [], true, function(require, exports, module) {
   ;
   var global = this,
@@ -602,7 +602,7 @@ System.registerDynamic("4", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("6", ["8"], true, function(require, exports, module) {
+System.registerDynamic("7", ["8"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -628,7 +628,7 @@ System.registerDynamic("5", ["9"], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("7", [], false, function(__require, __exports, __module) {
+System.registerDynamic("6", [], false, function(__require, __exports, __module) {
   var _retrieveGlobal = System.get("@@global-helpers").prepareGlobal(__module.id, "angular", null);
   (function() {
     "format global";
@@ -11857,18 +11857,7 @@ System.registerDynamic("8", ["b"], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("a", ["c", "d"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var $def = require("c");
-  $def($def.S, 'Object', {assign: require("d")});
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("b", ["e"], true, function(require, exports, module) {
+System.registerDynamic("b", ["c"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -11921,7 +11910,7 @@ System.registerDynamic("b", ["e"], true, function(require, exports, module) {
       throw TypeError("Can't call method on  " + it);
     return it;
   }
-  var $ = module.exports = require("e")({
+  var $ = module.exports = require("c")({
     g: global,
     core: core,
     html: global.document && document.documentElement,
@@ -11969,7 +11958,44 @@ System.registerDynamic("b", ["e"], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("c", ["b"], true, function(require, exports, module) {
+System.registerDynamic("a", ["d", "e"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $def = require("d");
+  $def($def.S, 'Object', {assign: require("e")});
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("e", ["b", "f"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $ = require("b"),
+      enumKeys = require("f");
+  module.exports = Object.assign || function assign(target, source) {
+    var T = Object($.assertDefined(target)),
+        l = arguments.length,
+        i = 1;
+    while (l > i) {
+      var S = $.ES5Object(arguments[i++]),
+          keys = enumKeys(S),
+          length = keys.length,
+          j = 0,
+          key;
+      while (length > j)
+        T[key = keys[j++]] = S[key];
+    }
+    return T;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("d", ["b"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -12028,7 +12054,7 @@ System.registerDynamic("c", ["b"], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("e", [], true, function(require, exports, module) {
+System.registerDynamic("c", [], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -12037,32 +12063,6 @@ System.registerDynamic("e", [], true, function(require, exports, module) {
     $.FW = false;
     $.path = $.core;
     return $;
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("d", ["b", "f"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var $ = require("b"),
-      enumKeys = require("f");
-  module.exports = Object.assign || function assign(target, source) {
-    var T = Object($.assertDefined(target)),
-        l = arguments.length,
-        i = 1;
-    while (l > i) {
-      var S = $.ES5Object(arguments[i++]),
-          keys = enumKeys(S),
-          length = keys.length,
-          j = 0,
-          key;
-      while (length > j)
-        T[key = keys[j++]] = S[key];
-    }
-    return T;
   };
   global.define = __define;
   return module.exports;
@@ -12167,10 +12167,13 @@ System.register('1', ['3', '4', '5'], function (_export) {
 			'use strict';
 
 			SettingsService = (function () {
-				function SettingsService() {
+				function SettingsService(storage) {
 					_classCallCheck(this, SettingsService);
 
 					this.currentSettings = {};
+					this.storage = storage || window.localStorage;
+
+					this.currentSettings = _Object$assign(this.currentSettings, this.storage.getItem('AngularSettingService'));
 				}
 
 				_createClass(SettingsService, [{
@@ -12191,6 +12194,8 @@ System.register('1', ['3', '4', '5'], function (_export) {
 						}
 
 						this.currentSettings[key] = value;
+
+						this.storage.setItem('AngularSettingService', this.currentSettings);
 					}
 				}, {
 					key: 'set',
