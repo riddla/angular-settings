@@ -29,18 +29,29 @@ class SettingsService {
 
 		this.currentSettings[key] = value;
 
+		debugger;
+
 		this.storage.setItem('AngularSettingService', JSON.stringify(this.currentSettings));
 	}
 
 	set(key, value, namespace) {
-		if (key.includes(':')) {
-			let keys = key.split(':');
-			let namespaceParsed = keys[0];
-			let tempKey = keys[1];
+		if (key.includes(':') || namespace) {
+
+			let namespaceParsed = '';
+			let tempKey = '';
+
+			if (namespace) {
+				namespaceParsed = namespace;
+				tempKey = key;
+			}
+			else {
+				let keys = key.split(':');
+				namespaceParsed = keys[0];
+				tempKey = keys[1];
+			}
 
 			let newNamespace = {
 			};
-			newNamespace = {};
 			newNamespace[tempKey] = value;
 
 			let oldNamespace = this._get(namespaceParsed) || {};
@@ -50,13 +61,7 @@ class SettingsService {
 			this._set(namespaceParsed, mergedNamespace);
 		}
 		else {
-			if (namespace) {
-				this._set(namespace);
-				this.currentSettings[namespace][key] = value;
-			}
-			else {
-				this._set(key, value);
-			}
+			this._set(key, value);
 		}
 	}
 

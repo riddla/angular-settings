@@ -5,6 +5,7 @@ describe('SettingsService', () => {
     let demoNamespaceKey = 'DEMONAMESPACE:DEMOKEY';
     let demoNamespaceKey2 = 'DEMONAMESPACE:DEMOKEY2';
     let demoKey = 'DEMOKEY';
+    let demoKey2 = 'DEMOKEY2';
     let demoValue = 'DEMOVALUE';
 
 	let demoSavedSettings = {
@@ -88,6 +89,13 @@ describe('SettingsService', () => {
 		it('should set a setting with namespace provided as parameter', () => {
 			settingsService.set(demoKey, demoValue, demoGroup);
 			expect(settingsService.current[demoGroup][demoKey]).toBe(demoValue);
+		});
+
+		it('should not override previous namespaced setting when namespace provided as parameter', () => {
+			settingsService.set(demoKey, demoValue, demoGroup);
+			settingsService.set(demoKey2, demoValue, demoGroup);
+			expect(settingsService.current[demoGroup][demoKey]).toBe(demoValue);
+			expect(settingsService.current[demoGroup][demoKey2]).toBe(demoValue);
 		});
     });
 

@@ -532,7 +532,18 @@ System.registerDynamic("7", ["9"], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("9", ["a"], true, function(require, exports, module) {
+System.registerDynamic("8", ["a", "b"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $def = require("a");
+  $def($def.S, 'Object', {assign: require("b")});
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("9", ["c"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -585,7 +596,7 @@ System.registerDynamic("9", ["a"], true, function(require, exports, module) {
       throw TypeError("Can't call method on  " + it);
     return it;
   }
-  var $ = module.exports = require("a")({
+  var $ = module.exports = require("c")({
     g: global,
     core: core,
     html: global.document && document.documentElement,
@@ -633,58 +644,7 @@ System.registerDynamic("9", ["a"], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("8", ["b", "c"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var $def = require("b");
-  $def($def.S, 'Object', {assign: require("c")});
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("c", ["9", "d"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var $ = require("9"),
-      enumKeys = require("d");
-  module.exports = Object.assign || function assign(target, source) {
-    var T = Object($.assertDefined(target)),
-        l = arguments.length,
-        i = 1;
-    while (l > i) {
-      var S = $.ES5Object(arguments[i++]),
-          keys = enumKeys(S),
-          length = keys.length,
-          j = 0,
-          key;
-      while (length > j)
-        T[key = keys[j++]] = S[key];
-    }
-    return T;
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("a", [], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  module.exports = function($) {
-    $.FW = false;
-    $.path = $.core;
-    return $;
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("b", ["9"], true, function(require, exports, module) {
+System.registerDynamic("a", ["9"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -739,6 +699,46 @@ System.registerDynamic("b", ["9"], true, function(require, exports, module) {
     }
   }
   module.exports = $def;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("c", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function($) {
+    $.FW = false;
+    $.path = $.core;
+    return $;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("b", ["9", "d"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $ = require("9"),
+      enumKeys = require("d");
+  module.exports = Object.assign || function assign(target, source) {
+    var T = Object($.assertDefined(target)),
+        l = arguments.length,
+        i = 1;
+    while (l > i) {
+      var S = $.ES5Object(arguments[i++]),
+          keys = enumKeys(S),
+          length = keys.length,
+          j = 0,
+          key;
+      while (length > j)
+        T[key = keys[j++]] = S[key];
+    }
+    return T;
+  };
   global.define = __define;
   return module.exports;
 });
@@ -874,18 +874,28 @@ System.register('1', ['2', '3', '4'], function (_export) {
 
 						this.currentSettings[key] = value;
 
+						debugger;
+
 						this.storage.setItem('AngularSettingService', JSON.stringify(this.currentSettings));
 					}
 				}, {
 					key: 'set',
 					value: function set(key, value, namespace) {
-						if (key.includes(':')) {
-							var keys = key.split(':');
-							var namespaceParsed = keys[0];
-							var tempKey = keys[1];
+						if (key.includes(':') || namespace) {
+
+							var namespaceParsed = '';
+							var tempKey = '';
+
+							if (namespace) {
+								namespaceParsed = namespace;
+								tempKey = key;
+							} else {
+								var keys = key.split(':');
+								namespaceParsed = keys[0];
+								tempKey = keys[1];
+							}
 
 							var newNamespace = {};
-							newNamespace = {};
 							newNamespace[tempKey] = value;
 
 							var oldNamespace = this._get(namespaceParsed) || {};
@@ -894,12 +904,7 @@ System.register('1', ['2', '3', '4'], function (_export) {
 
 							this._set(namespaceParsed, mergedNamespace);
 						} else {
-							if (namespace) {
-								this._set(namespace);
-								this.currentSettings[namespace][key] = value;
-							} else {
-								this._set(key, value);
-							}
+							this._set(key, value);
 						}
 					}
 				}, {

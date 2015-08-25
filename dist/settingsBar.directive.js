@@ -20,11 +20,9 @@
 				return value === true || value === false;
 			};
 
-            //vm._ = _;
             vm.settings = settings.current;
 
             vm.toggle = function (group, key, value) {
-				value = ! value;
                 settings.set(key, value, group);
                 $window.location.reload();
             };
