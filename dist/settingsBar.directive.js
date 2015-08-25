@@ -15,11 +15,17 @@
         function settingsBarDirectiveController(settings, $window, $rootScope, $state) {
             var vm = this;
 
+			// TODO: include/use lodash` version
+			vm.isBoolean = function(value) {
+				return value === true || value === false;
+			};
+
             //vm._ = _;
             vm.settings = settings.current;
 
-            vm.toggle = function (key) {
-                settings.toggle(key);
+            vm.toggle = function (group, key, value) {
+				value = ! value;
+                settings.set(key, value, group);
                 $window.location.reload();
             };
 

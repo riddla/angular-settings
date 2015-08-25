@@ -1,4 +1,4 @@
-import angular from 'angular';
+import angular from '../node_modules/angular/index';
 import { mocks } from "../node_modules/angular-mocks/angular-mocks";
 import { SettingsProvider } from "src/index";
 
@@ -8,19 +8,13 @@ describe('SettingsProvider', () => {
 
     beforeEach(()=> {
 
-        // see http://jsfiddle.net/eitanp461/qTvMz/
+		module('angular-settings')
 
-        angular.module('testApp', function () {
-        })
-            .config(function (settingsProvider) {
-                SettingsProviderInstance = settingsProvider;
-            });
-        // Initialize angular-settings injector
-        module('angular-settings', 'testApp');
+		module(function(settingsProvider) {
+			SettingsProviderInstance = settingsProvider;
+		});
 
-        // Kickstart the injectors previously registered with calls to angular.mock.module
-        inject(function () {
-        });
+		inject();
     });
 
     it('registers itself', () => {

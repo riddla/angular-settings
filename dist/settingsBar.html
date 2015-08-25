@@ -8,7 +8,8 @@
 			<td ng-bind="key">
 			</td>
 			<td>
-				<input type="text" class="form-control" id="exampleInputName2" disabled ng-value="value">
+				<input ng-if="!vm.isBoolean(value)" type="text" class="form-control" disabled ng-value="value">
+				<input ng-if="vm.isBoolean(value)" type="checkbox" class="form-control"  ng-model="vm.settings[groupTitle][key]" ng-value="value" ng-click="vm.toggle(groupTitle, key, value)">
 			</td>
 		</tr>
 	</table>

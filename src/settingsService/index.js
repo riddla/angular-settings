@@ -6,7 +6,11 @@ class SettingsService {
 		this.currentSettings = {};
 		this.storage = storage || window.localStorage;
 
-		this.currentSettings = Object.assign(this.currentSettings, this.storage.getItem('AngularSettingService'));
+		this._mergeLocallyStoredSettings();
+	}
+
+	_mergeLocallyStoredSettings() {
+		this.currentSettings = Object.assign(this.currentSettings, JSON.parse(this.storage.getItem('AngularSettingService')));
 	}
 
 	clear() {
@@ -15,6 +19,7 @@ class SettingsService {
 
 	setDefaults(defaultSettings) {
 		this.currentSettings = Object.assign(this.currentSettings, defaultSettings);
+		this._mergeLocallyStoredSettings();
 	}
 
 	_set(key, value) {
@@ -24,10 +29,10 @@ class SettingsService {
 
 		this.currentSettings[key] = value;
 
-		this.storage.setItem('AngularSettingService', this.currentSettings);
+		this.storage.setItem('AngularSettingService', JSON.stringify(this.currentSettings));
 	}
 
-	set(key, value) {
+	set(key, value, namespace) {
 		if (key.includes(':')) {
 			let keys = key.split(':');
 			let namespace = keys[0];
@@ -37,7 +42,13 @@ class SettingsService {
 			this.currentSettings[namespace][tempKey] = value;
 		}
 		else {
-			this._set(key, value);
+			if (namespace) {
+				this._set(namespace);
+				this.currentSettings[namespace][key] = value;
+			}
+			else {
+				this._set(key, value);
+			}
 		}
 	}
 

@@ -9,6 +9,7 @@ describe('SettingsService', () => {
 	let demoSavedSettings = {
 		DEMO_SAVED_KEY: 'DEMO_SAVED_VALUE'
 	};
+	let demoSavedSettingsAsString = '{"DEMO_SAVED_KEY":"DEMO_SAVED_VALUE"}';
 
 	let mockStorage = {
 		setItem: function() {},
@@ -19,9 +20,12 @@ describe('SettingsService', () => {
 		length: 0
 	};
 
+	let defaults = {};
+	defaults[demoKey] = demoValue;
+
 
 	beforeEach(()=> {
-		spyOn(mockStorage, 'getItem').and.returnValue(demoSavedSettings);
+		spyOn(mockStorage, 'getItem').and.returnValue(demoSavedSettingsAsString);
         settingsService = new SettingsService(mockStorage);
     });
 
@@ -35,8 +39,11 @@ describe('SettingsService', () => {
     });
 
     describe('#setDefaults', () => {
-        let defaults = {};
-        defaults[demoKey] = demoValue;
+
+		beforeEach(()=> {
+			mockStorage.getItem.and.returnValue('{}');
+			settingsService = new SettingsService(mockStorage);
+		});
 
         it('should set default settings', () => {
             settingsService.setDefaults(defaults);
@@ -58,6 +65,7 @@ describe('SettingsService', () => {
     describe('#set', () => {
         let demoKey = 'DEMOKEY';
         let demoValue = 'DEMOVALUE';
+        let demoGroup = 'DEMOGROUP';
 
         it('should set a setting', () => {
             settingsService.set(demoKey, demoValue);
@@ -68,11 +76,18 @@ describe('SettingsService', () => {
             settingsService.set(demoNamespaceKey, demoValue);
             expect(settingsService.current.DEMONAMESPACE.DEMOKEY).toBe(demoValue);
         });
+
+		it('should set a setting with namespace provided as parameter', () => {
+			settingsService.set(demoKey, demoValue, demoGroup);
+			expect(settingsService.current[demoGroup][demoKey]).toBe(demoValue);
+		});
     });
 
-	fdescribe('localstorage', () => {
+	describe('localstorage', () => {
 		beforeEach(() => {
 			spyOn(mockStorage, 'setItem');
+			spyOn(JSON, 'stringify');
+			spyOn(JSON, 'parse');
 		});
 
 		it('should save the current settings to localstorage', () => {
@@ -80,9 +95,24 @@ describe('SettingsService', () => {
 			expect(mockStorage.setItem).toHaveBeenCalled();
 		});
 
-		it('should get saved settings upon start', () => {
+		it('should get saved settings after start', () => {
 			expect(mockStorage.getItem).toHaveBeenCalled();
             expect(settingsService.current).toEqual(demoSavedSettings);
+		});
+
+		it('should get saved settings after default settings are set', () => {
+			settingsService.setDefaults(defaults);
+			expect(mockStorage.getItem.calls.count()).toBe(2);
+		});
+
+		it('should decode objects before saving', () => {
+			settingsService.set(demoKey, demoValue);
+			expect(JSON.stringify).toHaveBeenCalled();
+		});
+
+		it('should encode objects before getting', () => {
+			settingsService._mergeLocallyStoredSettings();
+			expect(JSON.parse).toHaveBeenCalled();
 		});
 	});
 

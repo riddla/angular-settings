@@ -1,7 +1,5 @@
 import { SettingsService } from './settingsService/index';
 
-import angular from 'angular';
-
 class settingsProvider {
 
 	constructor() {
