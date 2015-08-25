@@ -35,11 +35,19 @@ class SettingsService {
 	set(key, value, namespace) {
 		if (key.includes(':')) {
 			let keys = key.split(':');
-			let namespace = keys[0];
+			let namespaceParsed = keys[0];
 			let tempKey = keys[1];
 
-			this._set(namespace);
-			this.currentSettings[namespace][tempKey] = value;
+			let newNamespace = {
+			};
+			newNamespace = {};
+			newNamespace[tempKey] = value;
+
+			let oldNamespace = this._get(namespaceParsed) || {};
+
+			let mergedNamespace = Object.assign(oldNamespace, newNamespace);
+
+			this._set(namespaceParsed, mergedNamespace);
 		}
 		else {
 			if (namespace) {

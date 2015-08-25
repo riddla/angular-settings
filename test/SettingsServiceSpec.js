@@ -3,6 +3,7 @@ import { SettingsService } from "src/settingsService/index";
 describe('SettingsService', () => {
     let settingsService;
     let demoNamespaceKey = 'DEMONAMESPACE:DEMOKEY';
+    let demoNamespaceKey2 = 'DEMONAMESPACE:DEMOKEY2';
     let demoKey = 'DEMOKEY';
     let demoValue = 'DEMOVALUE';
 
@@ -76,6 +77,13 @@ describe('SettingsService', () => {
             settingsService.set(demoNamespaceKey, demoValue);
             expect(settingsService.current.DEMONAMESPACE.DEMOKEY).toBe(demoValue);
         });
+
+		it('should not override previous namespaced setting', () => {
+			settingsService.set(demoNamespaceKey, demoValue);
+			settingsService.set(demoNamespaceKey2, demoValue);
+			expect(settingsService.current.DEMONAMESPACE.DEMOKEY).toBe(demoValue);
+			expect(settingsService.current.DEMONAMESPACE.DEMOKEY2).toBe(demoValue);
+		});
 
 		it('should set a setting with namespace provided as parameter', () => {
 			settingsService.set(demoKey, demoValue, demoGroup);
