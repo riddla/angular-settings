@@ -8,8 +8,8 @@
 			settingsProvider.setDefaults({
 				settingsbar: {
 					actions: {
-						foo: function () {
-							alert('bar');
+						toggleSettingsCallback: function() {
+							window.location.reload();
 						}
 					}
 				}

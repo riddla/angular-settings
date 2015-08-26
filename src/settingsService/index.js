@@ -1,5 +1,7 @@
 'use strict';
 
+const LOCAL_STORAGE_KEY = 'AngularSettingService';
+
 class SettingsService {
 
 	constructor(storage) {
@@ -10,11 +12,12 @@ class SettingsService {
 	}
 
 	_mergeLocallyStoredSettings() {
-		this.currentSettings = Object.assign(this.currentSettings, JSON.parse(this.storage.getItem('AngularSettingService')));
+		this.currentSettings = Object.assign(this.currentSettings, JSON.parse(this.storage.getItem(LOCAL_STORAGE_KEY)));
 	}
 
 	clear() {
 		this.currentSettings = {};
+		this.storage.removeItem(LOCAL_STORAGE_KEY);
 	}
 
 	setDefaults(defaultSettings) {
@@ -31,7 +34,7 @@ class SettingsService {
 
 		debugger;
 
-		this.storage.setItem('AngularSettingService', JSON.stringify(this.currentSettings));
+		this.storage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(this.currentSettings));
 	}
 
 	set(key, value, namespace) {

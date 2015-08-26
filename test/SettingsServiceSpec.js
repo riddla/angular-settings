@@ -18,7 +18,6 @@ describe('SettingsService', () => {
 		removeItem: function() {},
 		key: function() {},
 		getItem: function() {},
-		removeItem: function() {},
 		length: 0
 	};
 
@@ -28,6 +27,7 @@ describe('SettingsService', () => {
 
 	beforeEach(()=> {
 		spyOn(mockStorage, 'getItem').and.returnValue(demoSavedSettingsAsString);
+		spyOn(mockStorage, 'removeItem');
         settingsService = new SettingsService(mockStorage);
     });
 
@@ -38,6 +38,13 @@ describe('SettingsService', () => {
             settingsService.clear();
             expect(settingsService.current).toEqual({});
         });
+
+		it('should prune locally stored settings also', () => {
+			settingsService.current[demoKey] = demoValue;
+
+			settingsService.clear();
+			expect(mockStorage.removeItem).toHaveBeenCalled();
+		});
     });
 
     describe('#setDefaults', () => {

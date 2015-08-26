@@ -24,7 +24,7 @@
 
             vm.toggle = function (group, key, value) {
                 settings.set(key, value, group);
-                $window.location.reload();
+				callbacks.toggleSettingsCallback();
             };
 
             vm.showDialog = function () {
@@ -35,7 +35,17 @@
                 });
             };
 
-            vm.actions = settings.get('settingsbar:actions');
+			var callbacks = {
+				toggleSettingsCallback: function() {
+					$window.location.reload();
+				}
+			};
+
+            vm.actions = {
+				clearSettings: function() {
+					settings.clear();
+				}
+			};
 
             vm.callAction = function (key) {
                 return vm.actions[key].apply();

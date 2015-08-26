@@ -644,6 +644,32 @@ System.registerDynamic("9", ["c"], true, function(require, exports, module) {
   return module.exports;
 });
 
+System.registerDynamic("b", ["9", "d"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $ = require("9"),
+      enumKeys = require("d");
+  module.exports = Object.assign || function assign(target, source) {
+    var T = Object($.assertDefined(target)),
+        l = arguments.length,
+        i = 1;
+    while (l > i) {
+      var S = $.ES5Object(arguments[i++]),
+          keys = enumKeys(S),
+          length = keys.length,
+          j = 0,
+          key;
+      while (length > j)
+        T[key = keys[j++]] = S[key];
+    }
+    return T;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
 System.registerDynamic("a", ["9"], true, function(require, exports, module) {
   ;
   var global = this,
@@ -712,32 +738,6 @@ System.registerDynamic("c", [], true, function(require, exports, module) {
     $.FW = false;
     $.path = $.core;
     return $;
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("b", ["9", "d"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var $ = require("9"),
-      enumKeys = require("d");
-  module.exports = Object.assign || function assign(target, source) {
-    var T = Object($.assertDefined(target)),
-        l = arguments.length,
-        i = 1;
-    while (l > i) {
-      var S = $.ES5Object(arguments[i++]),
-          keys = enumKeys(S),
-          length = keys.length,
-          j = 0,
-          key;
-      while (length > j)
-        T[key = keys[j++]] = S[key];
-    }
-    return T;
   };
   global.define = __define;
   return module.exports;
@@ -826,7 +826,7 @@ System.register('0', ['1', '2', '3'], function (_export) {
 	};
 });
 System.register('1', ['2', '3', '4'], function (_export) {
-	var _createClass, _classCallCheck, _Object$assign, SettingsService;
+	var _createClass, _classCallCheck, _Object$assign, LOCAL_STORAGE_KEY, SettingsService;
 
 	return {
 		setters: [function (_) {
@@ -838,6 +838,8 @@ System.register('1', ['2', '3', '4'], function (_export) {
 		}],
 		execute: function () {
 			'use strict';
+
+			LOCAL_STORAGE_KEY = 'AngularSettingService';
 
 			SettingsService = (function () {
 				function SettingsService(storage) {
@@ -852,12 +854,13 @@ System.register('1', ['2', '3', '4'], function (_export) {
 				_createClass(SettingsService, [{
 					key: '_mergeLocallyStoredSettings',
 					value: function _mergeLocallyStoredSettings() {
-						this.currentSettings = _Object$assign(this.currentSettings, JSON.parse(this.storage.getItem('AngularSettingService')));
+						this.currentSettings = _Object$assign(this.currentSettings, JSON.parse(this.storage.getItem(LOCAL_STORAGE_KEY)));
 					}
 				}, {
 					key: 'clear',
 					value: function clear() {
 						this.currentSettings = {};
+						this.storage.removeItem(LOCAL_STORAGE_KEY);
 					}
 				}, {
 					key: 'setDefaults',
@@ -876,7 +879,7 @@ System.register('1', ['2', '3', '4'], function (_export) {
 
 						debugger;
 
-						this.storage.setItem('AngularSettingService', JSON.stringify(this.currentSettings));
+						this.storage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(this.currentSettings));
 					}
 				}, {
 					key: 'set',
