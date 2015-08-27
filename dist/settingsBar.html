@@ -1,14 +1,13 @@
-<div class="panel panel-default" ng-repeat="(groupTitle, groupItems) in vm.settings"
-	 ng-if="groupTitle !== 'settingsbar'">
+<div class="panel panel-default" ng-repeat="(groupTitle, groupItems) in vm.settings">
 	<div class="panel-heading">
 		<h3 class="panel-title" ng-bind="groupTitle"></h3>
 	</div>
 	<table class="table">
 		<tr ng-repeat="(key, value) in groupItems" ng-if="key != 'actions'">
-			<td ng-bind="key">
+			<td ng-bind="key" ng-class="{'text-primary': vm.settings[groupTitle][key] !== vm.settingsDefault[groupTitle][key]}">
 			</td>
 			<td>
-				<input ng-if="!vm.isBoolean(value)" type="text" class="form-control" disabled ng-value="value">
+				<input ng-if="!vm.isBoolean(value)" type="text" class="form-control"  ng-model="vm.settings[groupTitle][key]" ng-change="vm.changeValue(value, groupTitle, key)">
 				<input ng-if="vm.isBoolean(value)" type="checkbox" class="form-control"  ng-model="vm.settings[groupTitle][key]" ng-value="value" ng-click="vm.toggle(groupTitle, key, value)">
 			</td>
 		</tr>

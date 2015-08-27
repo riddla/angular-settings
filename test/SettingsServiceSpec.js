@@ -69,6 +69,12 @@ describe('SettingsService', () => {
                 foo: 'bar'
             });
         });
+
+		it('keeps track of the default values', () => {
+			settingsService.setDefaults(defaults);
+			expect(settingsService.defaultSettings).toEqual(defaults);
+			expect(settingsService.default).toEqual(defaults);
+		});
     });
 
     describe('#set', () => {

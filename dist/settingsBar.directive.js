@@ -1,59 +1,61 @@
 /*eslint-disable new-cap*/
 (function (angular) {
-    'use strict';
+	'use strict';
 
-    function settingsBarDirective() {
+	function settingsBarDirective() {
 
-        return {
-            restrict: 'E',
-            templateUrl: 'bower_components/angular-settings/settingsBar.html',
-            scope: {},
-            controller: settingsBarDirectiveController,
-            controllerAs: 'vm'
-        }
+		return {
+			restrict    : 'E',
+			templateUrl : 'bower_components/angular-settings/settingsBar.html',
+			scope       : {},
+			controller  : settingsBarDirectiveController,
+			controllerAs: 'vm'
+		}
 
-        function settingsBarDirectiveController(settings, $window, $rootScope, $state) {
-            var vm = this;
+		function settingsBarDirectiveController(settings, $window) {
+			var vm = this;
 
 			// TODO: include/use lodash` version
-			vm.isBoolean = function(value) {
+			vm.isBoolean = function (value) {
 				return value === true || value === false;
 			};
 
-            vm.settings = settings.current;
+			vm.settings = settings.current;
+			vm.settingsDefault = settings.default;
 
-            vm.toggle = function (group, key, value) {
-                settings.set(key, value, group);
+			vm.toggle = function (group, key, value) {
+				settings.set(key, value, group);
 				callbacks.toggleSettingsCallback();
-            };
+			};
 
-            vm.showDialog = function () {
-                ngDialog.open({
-                    template: 'app/debugBar/debugBarModal.html',
-                    className: 'ngdialog-theme-plain',
-                    scope: settings
-                });
-            };
+			vm.changeValue = function (oldValue, group, key) {
+				var newValue = settings.current[group][key];
+				settings.set(key, newValue, group);
+				//callbacks.toggleSettingsCallback();
+			};
 
-			var callbacks = {
-				toggleSettingsCallback: function() {
+			vm.actions = {
+				clearSettings: function () {
+					settings.clear();
 					$window.location.reload();
 				}
 			};
 
-            vm.actions = {
-				clearSettings: function() {
-					settings.clear();
-				}
+			vm.callAction = function (key) {
+				return vm.actions[key].apply();
 			};
 
-            vm.callAction = function (key) {
-                return vm.actions[key].apply();
-            };
-        }
+			var callbacks = {
+				toggleSettingsCallback: function () {
+					if (settings.get('settingsbar:reloadAfterSettingsChange')) {
+						$window.location.reload();
+					}
+				}
+			};
+		}
 
-    }
+	}
 
-    angular.module('angular-settings').directive('settings', settingsBarDirective);
+	angular.module('angular-settings').directive('settings', settingsBarDirective);
 
 }(angular));

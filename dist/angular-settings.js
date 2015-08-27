@@ -482,7 +482,7 @@ System.registerDynamic("3", [], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("4", ["6"], true, function(require, exports, module) {
+System.registerDynamic("5", ["6"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -495,7 +495,7 @@ System.registerDynamic("4", ["6"], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("5", ["7"], true, function(require, exports, module) {
+System.registerDynamic("4", ["7"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -508,23 +508,12 @@ System.registerDynamic("5", ["7"], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("6", ["8", "9"], true, function(require, exports, module) {
+System.registerDynamic("6", ["8"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  require("8");
-  module.exports = require("9").core.Object.assign;
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("7", ["9"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var $ = require("9");
+  var $ = require("8");
   module.exports = function defineProperty(it, key, desc) {
     return $.setDesc(it, key, desc);
   };
@@ -532,18 +521,18 @@ System.registerDynamic("7", ["9"], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("8", ["a", "b"], true, function(require, exports, module) {
+System.registerDynamic("7", ["9", "8"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $def = require("a");
-  $def($def.S, 'Object', {assign: require("b")});
+  require("9");
+  module.exports = require("8").core.Object.assign;
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("9", ["c"], true, function(require, exports, module) {
+System.registerDynamic("8", ["a"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -596,7 +585,7 @@ System.registerDynamic("9", ["c"], true, function(require, exports, module) {
       throw TypeError("Can't call method on  " + it);
     return it;
   }
-  var $ = module.exports = require("c")({
+  var $ = module.exports = require("a")({
     g: global,
     core: core,
     html: global.document && document.documentElement,
@@ -644,12 +633,37 @@ System.registerDynamic("9", ["c"], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("b", ["9", "d"], true, function(require, exports, module) {
+System.registerDynamic("9", ["b", "c"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = require("9"),
+  var $def = require("b");
+  $def($def.S, 'Object', {assign: require("c")});
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("a", [], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function($) {
+    $.FW = false;
+    $.path = $.core;
+    return $;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("c", ["8", "d"], true, function(require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $ = require("8"),
       enumKeys = require("d");
   module.exports = Object.assign || function assign(target, source) {
     var T = Object($.assertDefined(target)),
@@ -670,12 +684,12 @@ System.registerDynamic("b", ["9", "d"], true, function(require, exports, module)
   return module.exports;
 });
 
-System.registerDynamic("a", ["9"], true, function(require, exports, module) {
+System.registerDynamic("b", ["8"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = require("9"),
+  var $ = require("8"),
       global = $.g,
       core = $.core,
       isFunction = $.isFunction;
@@ -729,26 +743,12 @@ System.registerDynamic("a", ["9"], true, function(require, exports, module) {
   return module.exports;
 });
 
-System.registerDynamic("c", [], true, function(require, exports, module) {
+System.registerDynamic("d", ["8"], true, function(require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = function($) {
-    $.FW = false;
-    $.path = $.core;
-    return $;
-  };
-  global.define = __define;
-  return module.exports;
-});
-
-System.registerDynamic("d", ["9"], true, function(require, exports, module) {
-  ;
-  var global = this,
-      __define = global.define;
-  global.define = undefined;
-  var $ = require("9");
+  var $ = require("8");
   module.exports = function(it) {
     var keys = $.getKeys(it),
         getDesc = $.getDesc,
@@ -846,6 +846,7 @@ System.register('1', ['2', '3', '4'], function (_export) {
 					_classCallCheck(this, SettingsService);
 
 					this.currentSettings = {};
+					this.defaultSettings = {};
 					this.storage = storage || window.localStorage;
 
 					this._mergeLocallyStoredSettings();
@@ -866,6 +867,7 @@ System.register('1', ['2', '3', '4'], function (_export) {
 					key: 'setDefaults',
 					value: function setDefaults(defaultSettings) {
 						this.currentSettings = _Object$assign(this.currentSettings, defaultSettings);
+						this.defaultSettings = _Object$assign(this.defaultSettings, defaultSettings);
 						this._mergeLocallyStoredSettings();
 					}
 				}, {
@@ -949,6 +951,11 @@ System.register('1', ['2', '3', '4'], function (_export) {
 					},
 					set: function set(settingDefaults) {
 						this.currentSettings = settingDefaults;
+					}
+				}, {
+					key: 'default',
+					get: function get() {
+						return this.defaultSettings;
 					}
 				}]);
 

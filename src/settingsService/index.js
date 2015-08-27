@@ -6,6 +6,7 @@ class SettingsService {
 
 	constructor(storage) {
 		this.currentSettings = {};
+		this.defaultSettings = {};
 		this.storage = storage || window.localStorage;
 
 		this._mergeLocallyStoredSettings();
@@ -22,6 +23,7 @@ class SettingsService {
 
 	setDefaults(defaultSettings) {
 		this.currentSettings = Object.assign(this.currentSettings, defaultSettings);
+		this.defaultSettings = Object.assign(this.defaultSettings, defaultSettings);
 		this._mergeLocallyStoredSettings();
 	}
 
@@ -103,6 +105,10 @@ class SettingsService {
 
 	set current(settingDefaults) {
 		this.currentSettings = settingDefaults;
+	}
+
+	get default() {
+		return this.defaultSettings;
 	}
 }
 
