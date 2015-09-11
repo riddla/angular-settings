@@ -1,7 +1,7 @@
 {
   "name": "angular-settings",
   "version": "0.1.0",
-  "description": "",
+  "description": "Angular service for convenient settings management",
   "keywords": [
     "angular",
     "settings",
