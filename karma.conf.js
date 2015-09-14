@@ -1,12 +1,9 @@
-// Karma configuration
-// Generated on Wed Aug 12 2015 15:51:14 GMT+0200 (CEST)
-
 module.exports = function (config) {
     config.set({
 
         basePath: '',
 
-        frameworks: ['jspm', 'jasmine'],
+        frameworks: ['jspm', 'jasmine', 'phantomjs-shim'],
 
         jspm: {
             loadFiles: [
@@ -36,9 +33,9 @@ module.exports = function (config) {
 
         browsers: ['PhantomJS'],
 
-        singleRun: false,
+        singleRun: true,
 
-        plugins: ['karma-jspm', 'karma-phantomjs-launcher', 'karma-jasmine', 'karma-coverage', 'karma-babel-preprocessor'],
+        plugins: ['karma-jspm', 'karma-phantomjs-launcher', 'karma-jasmine', 'karma-coverage', 'karma-babel-preprocessor', 'karma-phantomjs-shim'],
 
         preprocessors: {
             'test/(*spec).js': ['babel', 'coverage'],
