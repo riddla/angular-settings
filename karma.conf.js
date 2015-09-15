@@ -3,7 +3,7 @@ module.exports = function (config) {
 
         basePath: '',
 
-        frameworks: ['jspm', 'jasmine', 'phantomjs-shim'],
+        frameworks: ['jspm', 'jasmine', 'es6-shim'],
 
         jspm: {
             loadFiles: [
@@ -35,7 +35,7 @@ module.exports = function (config) {
 
         singleRun: true,
 
-        plugins: ['karma-jspm', 'karma-phantomjs-launcher', 'karma-jasmine', 'karma-coverage', 'karma-babel-preprocessor', 'karma-phantomjs-shim'],
+        plugins: ['karma-jspm', 'karma-phantomjs-launcher', 'karma-jasmine', 'karma-coverage', 'karma-babel-preprocessor', 'karma-es6-shim'],
 
         preprocessors: {
             'test/(*spec).js': ['babel', 'coverage'],
